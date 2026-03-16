@@ -1,4 +1,5 @@
-/// Barrel file for core exports
-export 'di/injection_container.dart';
-export 'network/api_consumer.dart';
-export 'routes/app_routes.dart';
+export 'di/di.dart';
+export 'network/network.dart';
+export 'routes/routes.dart';
+export 'style/style.dart';
+export 'widgets/widgets.dart';

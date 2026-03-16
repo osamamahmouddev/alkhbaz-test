@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+import '../../env/env_config.dart';
+
 class DioFactory {
   DioFactory._();
 
@@ -10,7 +12,7 @@ class DioFactory {
     Duration timeOut = const Duration(seconds: 30);
 
     if (dio == null) {
-      dio = Dio(BaseOptions(baseUrl: "https://api.escuelajs.co/api/"));
+      dio = Dio(BaseOptions(baseUrl: EnvConfig.baseUrl));
       dio!
         ..options.connectTimeout = timeOut
         ..options.receiveTimeout = timeOut;
