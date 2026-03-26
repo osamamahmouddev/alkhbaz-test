@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-import '../core.dart';
+import '../style/app_colors.dart';
+import '../style/app_text_style.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -35,27 +36,23 @@ class CustomButton extends StatelessWidget {
         height: height ?? 48.h,
         width: double.infinity,
         decoration: ShapeDecoration(
-          color: fillColor ?? Colors.purple,
+          color: fillColor ?? AppColors.primary,
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius ?? BorderRadius.circular(16.r),
-            side: BorderSide(color: Colors.purple, width: 1.5.w),
+            side: BorderSide(
+              color: fillColor ?? AppColors.primary,
+              width: 1.5.w,
+            ),
           ),
           shadows: const [
             BoxShadow(
-              color: Colors.black26,
-              blurRadius: 6,
-              offset: Offset(0, 4),
-              spreadRadius: -4,
-            ),
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 15,
-              offset: Offset(0, 10),
-              spreadRadius: -3,
+              color: AppColors.shadow,
+              blurRadius: 14,
+              offset: Offset(0, 8),
+              spreadRadius: -6,
             ),
           ],
         ),
-
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,14 +60,12 @@ class CustomButton extends StatelessWidget {
             child ??
                 Text(
                   text,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w500,
-                    color: textColor ?? Colors.white,
+                  style: AppTextStyle.button.copyWith(
+                    color: textColor ?? AppColors.textOnPrimary,
                   ),
                 ),
             space ?? const SizedBox.shrink(),
-            buttonIcon ?? SizedBox.shrink(),
+            buttonIcon ?? const SizedBox.shrink(),
           ],
         ),
       ),

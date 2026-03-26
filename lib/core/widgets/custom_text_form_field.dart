@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
+import '../style/app_colors.dart';
+import '../style/app_text_style.dart';
+
 class CustomTextField extends StatelessWidget {
   final String? hintText;
   final TextEditingController? controller;
@@ -44,42 +47,33 @@ class CustomTextField extends StatelessWidget {
       onChanged: onChanged,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       maxLines: obscureText ? 1 : maxLines,
-      style: TextStyle(
-        fontSize: 14.sp,
-        fontWeight: FontWeight.w400,
-        color: Colors.black,
-      ),
+      style: AppTextStyle.input,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyle(
-          fontSize: 14.sp,
-          fontWeight: FontWeight.w400,
-          color: Colors.black,
-        ),
+        hintStyle: AppTextStyle.inputHint,
         prefixIcon: SizedBox(
           width: 16.w,
           height: 16.h,
           child: Center(child: prefixIcon),
         ),
-
         suffixIcon: suffixIcon,
         filled: true,
-        fillColor: Colors.grey[50],
+        fillColor: AppColors.inputFill,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius ?? 16.r),
-          borderSide: BorderSide(width: 1, color: const Color(0xFFF0F4F9)),
+          borderSide: const BorderSide(width: 1, color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius ?? 16.r),
-          borderSide: BorderSide(width: 1, color: Colors.grey),
+          borderSide: const BorderSide(width: 1, color: AppColors.borderStrong),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius ?? 16.r),
-          borderSide: BorderSide(width: 1, color: Colors.grey),
+          borderSide: const BorderSide(width: 1, color: AppColors.error),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius ?? 16.r),
-          borderSide: BorderSide(width: 1, color: Colors.grey),
+          borderSide: const BorderSide(width: 1, color: AppColors.error),
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
       ),

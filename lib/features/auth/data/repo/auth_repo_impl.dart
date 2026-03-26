@@ -1,5 +1,7 @@
 import 'package:alkhbaz/core/network/graph/auth_queries/auth_queries.dart';
 import 'package:alkhbaz/core/network/graphql_error_handler.dart';
+import 'package:alkhbaz/features/auth/data/model/login/login_requst_body.dart';
+import 'package:alkhbaz/features/auth/data/model/login/login_response_Body.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../../domin/repos/auth_repo.dart';
@@ -27,6 +29,18 @@ class AuthRepoImpl implements AuthRepo {
         );
       }
 
+      return response;
+    });
+  }
+
+  @override
+  Future<Either<String, LoginResponseBody>> login(
+    LoginRequestBody loginRequestBody,
+  ) async {
+    return GraphQLErrorHandler.safeApiCall(() async {
+      final response = await authDataSource.login(
+        body: loginRequestBody.toJson(),
+      );
       return response;
     });
   }

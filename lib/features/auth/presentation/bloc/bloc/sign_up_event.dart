@@ -1,7 +1,9 @@
 part of 'sign_up_bloc.dart';
 
-sealed class SignUpEvent {}
+sealed class AuthEvent {}
 
-class SignUpStarted extends SignUpEvent {}
+class AuthStarted extends AuthEvent {}
 
-class SignUp extends SignUpEvent {}
+class SignUpEvent extends AuthEvent {}
+
+class LoginEvent extends AuthEvent {}

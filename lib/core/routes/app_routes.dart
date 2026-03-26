@@ -1,10 +1,10 @@
-import 'package:alkhbaz/core/di/injection_container.dart';
-import 'package:alkhbaz/core/routes/routes_string.dart';
-import 'package:alkhbaz/features/auth/presentation/bloc/bloc/sign_up_bloc.dart';
-import 'package:alkhbaz/features/auth/presentation/ui/login_screen.dart';
-import 'package:alkhbaz/features/auth/presentation/ui/sign_up_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/auth/auth.dart';
+import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/home/presentation/screens/layout_screen.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
+import '../core.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -12,14 +12,40 @@ class AppRoutes {
     routes: <RouteBase>[
       GoRoute(
         path: RoutesString.login,
-        builder: (context, state) => const LoginScreen(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<AuthBloc>(),
+          child: const LoginScreen(),
+        ),
       ),
       GoRoute(
         path: RoutesString.signUp,
         builder: (context, state) => BlocProvider(
-          create: (context) => sl<SignUpBloc>(),
+          create: (context) => sl<AuthBloc>(),
           child: const SignUpScreen(),
         ),
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) =>
+            LayoutScreen(navigationShell: navigationShell),
+
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: RoutesString.home,
+                builder: (context, state) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: RoutesString.profile,
+                builder: (context, state) => const ProfileScreen(),
+              ),
+            ],
+          ),
+        ],
       ),
     ],
   );

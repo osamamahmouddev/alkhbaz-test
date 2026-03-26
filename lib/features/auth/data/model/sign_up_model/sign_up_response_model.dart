@@ -31,7 +31,6 @@ abstract class ContactResponse with _$ContactResponse {
     required String id,
     required String firstName,
     required String lastName,
-
   }) = _ContactResponse;
 
   factory ContactResponse.fromJson(Map<String, dynamic> json) =>

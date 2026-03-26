@@ -20,7 +20,6 @@ abstract class ContactBody with _$ContactBody {
   const factory ContactBody({
     required String firstName,
     required String lastName,
-  
   }) = _ContactBody;
 
   factory ContactBody.fromJson(Map<String, dynamic> json) =>

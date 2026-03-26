@@ -9,8 +9,8 @@ class SignUpBlocListener extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SignUpBloc, SignUpState>(
-      bloc: BlocProvider.of<SignUpBloc>(context),
+    return BlocListener<AuthBloc, AuthState>(
+      bloc: BlocProvider.of<AuthBloc>(context),
       listenWhen: (previous, current) =>
           current is SignUpSuccess ||
           current is SignUpError ||
@@ -32,6 +32,8 @@ class SignUpBlocListener extends StatelessWidget {
               builder: (context) =>
                   const Center(child: CircularProgressIndicator()),
             );
+
+          default:
         }
       },
       child: SizedBox.shrink(),

@@ -25,7 +25,6 @@ class AuthQueries {
               ) {
                 contact {
                     id
-                 
                     lastName
                     firstName
                 }

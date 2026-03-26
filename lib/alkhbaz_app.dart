@@ -1,6 +1,8 @@
 import 'package:alkhbaz/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 
+import 'core/style/app_colors.dart';
+
 class AlkhbazApp extends StatefulWidget {
   const AlkhbazApp({super.key});
 
@@ -15,8 +17,8 @@ class _AlkhbazAppState extends State<AlkhbazApp> {
       debugShowCheckedModeBanner: false,
       routerConfig: AppRoutes.router,
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-        scaffoldBackgroundColor: Colors.white,
+        primaryColor: AppColors.primary,
+        scaffoldBackgroundColor: AppColors.scaffoldBackground,
       ),
       builder: (context, child) =>
           MediaQuery(data: MediaQuery.of(context).copyWith(), child: child!),

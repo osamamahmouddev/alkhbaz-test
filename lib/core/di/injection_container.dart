@@ -1,17 +1,21 @@
 import 'package:get_it/get_it.dart';
 
-import '../../features/auth/data/data.dart';
-import '../../features/auth/domin/repos/auth_repo.dart';
-import '../../features/auth/presentation/bloc/bloc/sign_up_bloc.dart';
+import '../../features/auth/auth.dart';
 import '../network/network.dart';
 
 final sl = GetIt.instance;
 
 Future<void> initServiceLocator() async {
   final dio = DioFactory.getDio();
+  final graphQLClient = GraphQLClientFactory.getClient();
+  final apiService = ApiService(dio: dio);
+
   sl
-    ..registerSingleton<ApiConsumer>(ApiService(dio: dio))
-    ..registerSingleton(AuthDataSource(apiConsumer: ApiService(dio: dio)))
+    ..registerSingleton<ApiConsumer>(apiService)
+    ..registerSingleton(graphQLClient)
+    ..registerSingleton(
+      AuthDataSource(apiConsumer: apiService, graphQLClient: graphQLClient),
+    )
     ..registerLazySingleton<AuthRepo>(() => AuthRepoImpl(authDataSource: sl()))
-    ..registerFactory(() => SignUpBloc(sl()));
+    ..registerFactory(() => AuthBloc(sl()));
 }

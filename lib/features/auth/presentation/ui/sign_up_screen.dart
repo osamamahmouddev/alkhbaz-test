@@ -1,18 +1,17 @@
-import 'package:alkhbaz/core/widgets/widgets.dart';
-import 'package:alkhbaz/features/auth/presentation/bloc/bloc/sign_up_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:go_router/go_router.dart';
 
-import 'widgets/sign_up_bloc_listener.dart';
+import '../../../../core/core.dart';
+import '../../auth.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<SignUpBloc>();
+    final bloc = context.read<AuthBloc>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sign Up'),
@@ -26,7 +25,7 @@ class SignUpScreen extends StatelessWidget {
             child: Column(
               children: [
                 RSizedBox(height: 24.h),
-                Image.asset("asstes/images/images.jpeg"),
+                Image.asset("assets/images/auth_hero.jpeg"),
                 RSizedBox(height: 24.h),
                 CustomTextField(
                   hintText: 'First Name',
@@ -63,7 +62,7 @@ class SignUpScreen extends StatelessWidget {
                 CustomTextField(
                   hintText: 'Username',
                   prefixIcon: Icon(Icons.person, color: Colors.grey.shade400),
-                  controller: bloc.userNameController,
+                  controller: bloc.signUpUserNameController,
                   obscureText: false,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -76,7 +75,7 @@ class SignUpScreen extends StatelessWidget {
                 CustomTextField(
                   hintText: 'Email',
                   prefixIcon: Icon(Icons.email, color: Colors.grey.shade400),
-                  controller: bloc.emailController,
+                  controller: bloc.signUpEmailController,
                   obscureText: false,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
@@ -90,7 +89,7 @@ class SignUpScreen extends StatelessWidget {
                 CustomTextField(
                   hintText: 'Password',
                   prefixIcon: Icon(Icons.lock, color: Colors.grey.shade400),
-                  controller: bloc.passwordController,
+                  controller: bloc.signUpPasswordController,
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -104,7 +103,7 @@ class SignUpScreen extends StatelessWidget {
                   text: 'Sign Up',
                   onPressed: () {
                     if (bloc.signUpFormKey.currentState!.validate()) {
-                      bloc.add(SignUpStarted());
+                      bloc.add(SignUpEvent());
                     } else {
                       return;
                     }
@@ -130,6 +129,4 @@ class SignUpScreen extends StatelessWidget {
       ),
     );
   }
-
-  // ignore: strict_top_level_inference
 }

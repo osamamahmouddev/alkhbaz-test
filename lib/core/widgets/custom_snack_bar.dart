@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+
 import '../style/app_colors.dart';
-import '../style/app_text_styles.dart';
+import '../style/app_text_style.dart';
 
 enum SnackBarType { success, error, warning, info }
 
@@ -69,10 +70,10 @@ class _CustomSnackBarState extends State<CustomSnackBar>
 
   Color _getBackgroundColor() {
     return switch (widget.type) {
-      SnackBarType.success => const Color(0xFF4CAF50),
-      SnackBarType.error => const Color(0xFFD32F2F),
-      SnackBarType.warning => const Color(0xFFFFA500),
-      SnackBarType.info => const Color(0xFF2196F3),
+      SnackBarType.success => AppColors.success,
+      SnackBarType.error => AppColors.error,
+      SnackBarType.warning => AppColors.warning,
+      SnackBarType.info => AppColors.info,
     };
   }
 
@@ -97,11 +98,11 @@ class _CustomSnackBarState extends State<CustomSnackBar>
             decoration: BoxDecoration(
               color: _getBackgroundColor(),
               borderRadius: BorderRadius.circular(12.r),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.3),
+                  color: AppColors.shadow,
                   blurRadius: 12,
-                  offset: const Offset(0, 4),
+                  offset: Offset(0, 4),
                 ),
               ],
             ),
@@ -109,12 +110,14 @@ class _CustomSnackBarState extends State<CustomSnackBar>
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               child: Row(
                 children: [
-                  Icon(_getIcon(), color: Colors.white, size: 24.sp),
+                  Icon(_getIcon(), color: AppColors.textOnPrimary, size: 24.sp),
                   SizedBox(width: 12.w),
                   Expanded(
                     child: Text(
                       widget.message,
-                      style: TextStyle().copyWith(color: Colors.white),
+                      style: AppTextStyle.bodyMedium.copyWith(
+                        color: AppColors.textOnPrimary,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -127,7 +130,7 @@ class _CustomSnackBarState extends State<CustomSnackBar>
                     },
                     child: Icon(
                       Icons.close_rounded,
-                      color: Colors.white,
+                      color: AppColors.textOnPrimary,
                       size: 20.sp,
                     ),
                   ),

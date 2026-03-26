@@ -1,46 +1,64 @@
 import 'dart:async';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-import '../../../data/model/model.dart';
-import '../../../domin/repos/auth_repo.dart';
+import '../../../auth.dart';
 
 part 'sign_up_event.dart';
 part 'sign_up_state.dart';
 
-class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepo authRepo;
-  SignUpBloc(this.authRepo) : super(SignUpInitial()) {
+  AuthBloc(this.authRepo) : super(SignUpInitial()) {
     on<SignUpEvent>(signUp);
+    on<LoginEvent>(login);
   }
+  // sign up
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  TextEditingController userNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController signUpUserNameController = TextEditingController();
+  TextEditingController signUpEmailController = TextEditingController();
+  TextEditingController signUpPasswordController = TextEditingController();
+  // login
+  TextEditingController loginUserNameController = TextEditingController();
+  TextEditingController loginPasswordController = TextEditingController();
+  // form keys
   GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
-  FutureOr<void> signUp(SignUpEvent event, Emitter<SignUpState> emit) async {
-    if (event is SignUpStarted) {
-      emit(SignUpLoading());
-      final response = await authRepo.signUp(
-        SignUpRequestBody(
-          storeId: "alkhbaz",
-          contact: ContactBody(
-            firstName: firstNameController.text,
-            lastName: lastNameController.text,
-          ),
-          account: AccountBody(
-            username: userNameController.text,
-            email: emailController.text,
-            password: passwordController.text,
-          ),
+  FutureOr<void> signUp(SignUpEvent event, Emitter<AuthState> emit) async {
+    emit(SignUpLoading());
+    final response = await authRepo.signUp(
+      SignUpRequestBody(
+        storeId: "alkhbaz",
+        contact: ContactBody(
+          firstName: firstNameController.text,
+          lastName: lastNameController.text,
         ),
-      );
-      response.fold(
-        (error) => emit(SignUpError(message: error)),
-        (signUpResponse) => emit(SignUpSuccess(data: signUpResponse)),
-      );
-    }
+        account: AccountBody(
+          username: signUpUserNameController.text,
+          email: signUpEmailController.text,
+          password: signUpPasswordController.text,
+        ),
+      ),
+    );
+    response.fold(
+      (error) => emit(SignUpError(message: error)),
+      (signUpResponse) => emit(SignUpSuccess(data: signUpResponse)),
+    );
+  }
+
+  FutureOr<void> login(LoginEvent event, Emitter<AuthState> emit) async {
+    emit(LoginLoading());
+    final response = await authRepo.login(
+      LoginRequestBody(
+        username: loginUserNameController.text,
+        password: loginPasswordController.text,
+      ),
+    );
+    response.fold(
+      (error) => emit(LoginError(message: error)),
+      (loginResponse) => emit(LoginSuccess(data: loginResponse)),
+    );
   }
 }

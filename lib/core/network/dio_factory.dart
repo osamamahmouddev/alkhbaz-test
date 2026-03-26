@@ -35,6 +35,10 @@ class DioFactory {
     dio?.options.headers = {'Authorization': 'Bearer $token'};
   }
 
+  static void changeDioHeaders(String contentType) {
+    dio?.options.headers = {'Content-Type': contentType};
+  }
+
   static void removeTokenFromHeaderAfterLogout() {
     dio?.options.headers = {'Authorization': 'Bearer '};
   }
